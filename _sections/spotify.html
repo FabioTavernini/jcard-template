@@ -1,0 +1,31 @@
+{%-include_relative _sections/sections/injections.html-%}
+<form>
+  <section>
+    {{openColumns-}}
+    {{openColumnFluid-}}
+
+    <div class="group">
+
+    </div>
+    {{closeColumn-}}
+    {{openColumnShorter-}}
+
+
+    {{closeColumn-}}
+    {{closeColumns-}}
+  </section>
+
+  <details>
+    <summary>
+      <h3>Spotify connection</h3>
+    </summary>
+    {% include_relative _sections/sections/spotify.html-%}
+  </details>
+
+  <div id="playlistselect">
+    <label for="playlists">Available playlists:</label>
+    <select id="playlists" onclick="HandlePlaylistSelect(this.value)">
+      <option value="0">Select from your playlists</option>
+    </select>
+  </div>
+</form>
