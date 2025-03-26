@@ -7,7 +7,7 @@ const AUTHORIZATION_ENDPOINT = "https://accounts.spotify.com/authorize";
 const TOKEN_ENDPOINT = "https://accounts.spotify.com/api/token";
 
 // OAuth Scopes
-const SCOPES = 'user-read-private user-read-email playlist-read-private playlist-read-collaborative';
+const SCOPES = 'playlist-read-private playlist-read-collaborative';
 
 // Token Management Utility
 const TokenManager = {
