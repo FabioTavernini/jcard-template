@@ -201,23 +201,20 @@ function updateUIForLoginState() {
     const accessToken = TokenManager.getAccessToken();
     const loginButton = document.getElementById('spotify-login-btn');
     const logoutButton = document.getElementById('spotify-logout-btn');
+    const playlistselectdiv = document.getElementById('playlistselectdiv');
     const playlistselect = document.getElementById('playlists');
-
-    console.log("Access Token:", accessToken);
 
     // Check if the user is logged in (i.e., there's a valid access token)
     if (accessToken) {
         // Hide login button, show logout button and playlist dropdown
         loginButton.style.display = 'none';
         logoutButton.style.display = 'inline';
-        playlistselect.style.display = 'inline';
+        playlistselectdiv.style.display = 'inline';
 
         // Fetch playlists only when the user is logged in
         fetchSpotifyPlaylists()
             .then(playlists => {
-                console.log("Fetched Playlists:", playlists)
 
-                // Sort playlists by name
                 const sortedPlaylists = playlists.items.sort((a, b) => a.name.localeCompare(b.name));
 
                 // Populate dropdown with sorted playlists
@@ -237,7 +234,7 @@ function updateUIForLoginState() {
         // If no access token, show login button and hide other UI elements
         loginButton.style.display = 'inline';
         logoutButton.style.display = 'none';
-        playlistselect.style.display = 'none';
+        playlistselectdiv.style.display = 'none';
     }
 }
 
