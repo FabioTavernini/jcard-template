@@ -1,6 +1,6 @@
 // Spotify OAuth Configuration
-const CLIENT_ID = '67cad9d0d7434d5e9cec40bc12c5797d'; // Replace with your Spotify Client ID
-const REDIRECT_URI = 'http://localhost:4000'; // Replace with your Jekyll site's local URL
+const CLIENT_ID = '67cad9d0d7434d5e9cec40bc12c5797d';
+const REDIRECT_URI = 'https://fabiotavernini.github.io/jcard-template/';
 
 // Spotify OAuth Endpoints
 const AUTHORIZATION_ENDPOINT = "https://accounts.spotify.com/authorize";
