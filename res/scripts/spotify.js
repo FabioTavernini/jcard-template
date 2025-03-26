@@ -121,23 +121,6 @@ async function exchangeCodeForToken(authorizationCode) {
     }
 }
 
-// Fetch User Profile
-async function fetchSpotifyProfile() {
-    const accessToken = TokenManager.getAccessToken();
-
-    if (!accessToken) {
-        throw new Error('No access token available');
-    }
-
-    const profileResponse = await fetch('https://api.spotify.com/v1/me', {
-        headers: {
-            'Authorization': `Bearer ${accessToken}`
-        }
-    });
-
-    return await profileResponse.json();
-}
-
 // Fetch Playlist data
 async function fetchSpotifyPlaylists() {
     const accessToken = TokenManager.getAccessToken();
@@ -179,22 +162,6 @@ function handleOAuthCallback() {
     if (authorizationCode) {
         exchangeCodeForToken(authorizationCode)
             .then(async (tokenData) => {
-                // Optional: Fetch and display user profile
-                // const profile = await fetchSpotifyProfile();
-                const playlists = await fetchSpotifyPlaylists();
-
-                // Sort playlists by name alphabetically
-                const sortedPlaylists = playlists.items.sort((a, b) => {
-                    return a.name.localeCompare(b.name);
-                });
-
-                const playlistselect = document.getElementById("playlists");
-                sortedPlaylists.forEach(item => {
-                    var option = document.createElement("option");
-                    option.text = item.name;
-                    option.value = item.id;
-                    playlistselect.appendChild(option);
-                });
 
                 // Clear authorization code from URL
                 window.history.replaceState({}, document.title, window.location.pathname);
@@ -231,22 +198,49 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function updateUIForLoginState() {
-
     const accessToken = TokenManager.getAccessToken();
     const loginButton = document.getElementById('spotify-login-btn');
     const logoutButton = document.getElementById('spotify-logout-btn');
-    const playlistselect = document.getElementById('playlistselect');
+    const playlistselect = document.getElementById('playlists');
 
+    console.log("Access Token:", accessToken);
+
+    // Check if the user is logged in (i.e., there's a valid access token)
     if (accessToken) {
-        loginButton.style.display = 'none';  // Hide the login button
-        logoutButton.style.display = 'inline';  // Show the logout button
-        playlistselect.style.display = 'inline';  // Show the playlist dropdown
+        // Hide login button, show logout button and playlist dropdown
+        loginButton.style.display = 'none';
+        logoutButton.style.display = 'inline';
+        playlistselect.style.display = 'inline';
+
+        // Fetch playlists only when the user is logged in
+        fetchSpotifyPlaylists()
+            .then(playlists => {
+                console.log("Fetched Playlists:", playlists)
+
+                // Sort playlists by name
+                const sortedPlaylists = playlists.items.sort((a, b) => a.name.localeCompare(b.name));
+
+                // Populate dropdown with sorted playlists
+                sortedPlaylists.forEach(playlist => {
+                    const option = document.createElement('option');
+                    option.text = playlist.name;
+                    option.value = playlist.id;
+                    playlistselect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching playlists:', error);
+                // Optionally, show a message to the user here about the error
+            });
+
     } else {
-        loginButton.style.display = 'inline';  // Show the login button
-        logoutButton.style.display = 'none';  // Hide the logout button
-        playlistselect.style.display = 'none';  // Hide the playlist dropdown
+        // If no access token, show login button and hide other UI elements
+        loginButton.style.display = 'inline';
+        logoutButton.style.display = 'none';
+        playlistselect.style.display = 'none';
     }
 }
+
 
 async function HandlePlaylistSelect(val) {
 
