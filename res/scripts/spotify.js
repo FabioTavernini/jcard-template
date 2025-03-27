@@ -204,6 +204,8 @@ function updateUIForLoginState() {
     const playlistselectdiv = document.getElementById('playlistselectdiv');
     const playlistselect = document.getElementById('playlists');
 
+    console.log(accessToken)
+
     // Check if the user is logged in (i.e., there's a valid access token)
     if (accessToken) {
         // Hide login button, show logout button and playlist dropdown
@@ -278,6 +280,9 @@ async function HandlePlaylistSelect(val) {
         document.getElementById('input-side-b-contents').value = SideBcontent
         document.getElementById('input-side-a-contents').dispatchEvent(new Event('input'));
         document.getElementById('input-side-b-contents').dispatchEvent(new Event('input'));
+
+        console.log(playlisttracks)
+        document.getElementById('CoverImage').src = playlisttracks.images[0].url
 
     }
 
