@@ -1,6 +1,7 @@
 // Spotify OAuth Configuration
 const CLIENT_ID = '67cad9d0d7434d5e9cec40bc12c5797d';
 const REDIRECT_URI = 'https://fabiotavernini.github.io/jcard-template/';
+// const REDIRECT_URI = 'http://localhost:4000';
 
 // Spotify OAuth Endpoints
 const AUTHORIZATION_ENDPOINT = "https://accounts.spotify.com/authorize";
